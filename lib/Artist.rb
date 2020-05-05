@@ -1,6 +1,7 @@
 class Artist
   extend Common::ClassMethods
   include Common::InstanceMethods
+  extend Concerns::Findable
   @@all = []
 
   def self.all
@@ -12,12 +13,15 @@ class Artist
     @songs = []
   end
 
-  attr_reader :songs
+  attr_reader :songs, :genre
 
   def add_song(song)
-    if song.artist == nil
-      @songs << song
-      song.artist = self
-
+    return if song.artist != nil || @songs.include?(song)
+    @songs << song
+    song.setArtist(self)
   end
+
+  def genres
+      @songs.map{ |song|  song.genre}.uniq
+    end
 end
