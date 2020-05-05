@@ -13,7 +13,7 @@ class Artist
     @songs = []
   end
 
-  attr_reader :songs, :genre
+  attr_reader :songs, :genre, :name
 
   def add_song(song)
     return if song.artist != nil || @songs.include?(song)
